@@ -1,9 +1,28 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
+  <ItemGroup>
+    <ProjectReference Include="..\Unitee.FluentStorage.Abstraction\Unitee.FluentStorage.Abstraction.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Storage.Blobs" Version="12.14.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
+  </ItemGroup>
+
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+
+    <Authors>CREAC'H</Authors>
+    <PackageId>Unitee.FluentStorage.AzureBlobStorage</PackageId>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <Title>Fluent storages</Title>
+    <Description>Provider for Unitee.FluentStorage</Description>
+    <RepositoryUrl>https://github.com/uniteeio/Unitee.FluentStorage</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GenerateErrorForMissingTargetingPacks>false</GenerateErrorForMissingTargetingPacks>
   </PropertyGroup>
 
 </Project>

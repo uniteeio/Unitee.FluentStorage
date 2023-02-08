@@ -4,6 +4,24 @@
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+
+    <Authors>CREAC'H</Authors>
+    <PackageId>Unitee.FluentStorage.Abstraction</PackageId>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <Title>Fluent storages</Title>
+    <Description>Fluent interface to upload to storages.</Description>
+    <RepositoryUrl>https://github.com/uniteeio/Unitee.FluentStorage</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GenerateErrorForMissingTargetingPacks>false</GenerateErrorForMissingTargetingPacks>
+
   </PropertyGroup>
+
+  <ItemGroup>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
+  </ItemGroup>
 
 </Project>
