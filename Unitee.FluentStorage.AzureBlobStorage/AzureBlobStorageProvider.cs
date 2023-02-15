@@ -124,4 +124,15 @@ public record AzureBlobStorageProvider : IAzureBlobStorageProvider
             }
         };
     }
+
+    public IFluentStorageProvider<Response<BlobContentInfo>, Response<BlobProperties>> FromUrl(Uri url)
+    {
+        var client = new BlobClient(url);
+
+        return this with
+        {
+            ContainerName = client.BlobContainerName,
+            FileName = client.Name,
+        };
+    }
 }
