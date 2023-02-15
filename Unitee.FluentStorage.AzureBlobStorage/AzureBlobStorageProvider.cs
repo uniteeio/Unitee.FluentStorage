@@ -6,7 +6,7 @@ using Unitee.FluentStorage.Abstraction;
 
 namespace Unitee.FluentStorage.AzureBlobStorage;
 
-interface IAzureBlobStorageProvider : IFluentStorageProvider<Response<BlobContentInfo>, Response<BlobProperties>>
+public interface IAzureBlobStorageProvider : IFluentStorageProvider<Response<BlobContentInfo>, Response<BlobProperties>, IAzureBlobStorageProvider>
 { }
 
 public record AzureBlobStorageProvider : IAzureBlobStorageProvider
@@ -90,27 +90,27 @@ public record AzureBlobStorageProvider : IAzureBlobStorageProvider
         return (blobClient.Uri, res);
     }
 
-    public IFluentStorageProvider<Response<BlobContentInfo>, Response<BlobProperties>> WithConnectionString(string connectionString)
+    public IAzureBlobStorageProvider WithConnectionString(string connectionString)
     {
         return this with { ConnectionString = connectionString };
     }
 
-    public IFluentStorageProvider<Response<BlobContentInfo>, Response<BlobProperties>> WithContainerName(string containerName)
+    public IAzureBlobStorageProvider WithContainerName(string containerName)
     {
         return this with { ContainerName = containerName };
     }
 
-    public IFluentStorageProvider<Response<BlobContentInfo>, Response<BlobProperties>> WithCreateIfNotExist(bool createIfNotExist = true)
+    public IAzureBlobStorageProvider WithCreateIfNotExist(bool createIfNotExist = true)
     {
         return this with { CreateIfNotExist = createIfNotExist };
     }
 
-    public IFluentStorageProvider<Response<BlobContentInfo>, Response<BlobProperties>> WithFileName(string fileName)
+    public IAzureBlobStorageProvider WithFileName(string fileName)
     {
         return this with { FileName = fileName };
     }
 
-    public IFluentStorageProvider<Response<BlobContentInfo>, Response<BlobProperties>> WithContentType(string contentType)
+    public IAzureBlobStorageProvider WithContentType(string contentType)
     {
         return this with
         {
@@ -125,7 +125,7 @@ public record AzureBlobStorageProvider : IAzureBlobStorageProvider
         };
     }
 
-    public IFluentStorageProvider<Response<BlobContentInfo>, Response<BlobProperties>> FromUrl(Uri url)
+    public IAzureBlobStorageProvider FromUrl(Uri url)
     {
         var client = new BlobClient(url);
 
