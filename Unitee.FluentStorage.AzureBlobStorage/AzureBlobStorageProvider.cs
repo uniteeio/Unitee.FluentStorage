@@ -6,7 +6,7 @@ using Unitee.FluentStorage.Abstraction;
 
 namespace Unitee.FluentStorage.AzureBlobStorage;
 
-public interface IAzureBlobStorageProvider : IFluentStorageProvider<Response<BlobContentInfo>, Response<BlobProperties>, IAzureBlobStorageProvider>
+public interface IAzureBlobStorageProvider : IFluentStorageProvider<Response<BlobContentInfo>, Response<BlobProperties>, Response<bool>, IAzureBlobStorageProvider>
 { }
 
 public record AzureBlobStorageProvider : IAzureBlobStorageProvider
@@ -61,6 +61,19 @@ public record AzureBlobStorageProvider : IAzureBlobStorageProvider
         var blobClient = GetBlobClient();
         var res = await blobClient.UploadAsync(f.OpenReadStream(), Headers);
         return (blobClient.Uri, res);
+    }
+
+    public async Task<Response<bool>> DeleteIfExistsAsync()
+    {
+        AssertGuards();
+
+        var blobClient = GetBlobClient();
+        return await blobClient.DeleteIfExistsAsync();
+    }
+
+    public async Task<Response<bool>> DeleteIfExistsAsync(Uri url)
+    {
+        return await FromUrl(url).DeleteIfExistsAsync();
     }
 
     public async Task<(Uri, Response<BlobContentInfo>)> UploadAsync(Stream s)

@@ -2,7 +2,7 @@
 
 namespace Unitee.FluentStorage.Abstraction;
 
-public interface IFluentStorageProvider<TNativeResponseUpload, TNativeResponseDownload, TSelf>
+public interface IFluentStorageProvider<TNativeResponseUpload, TNativeResponseDownload, TNativeResponseDelete, TSelf>
 {
     public TSelf FromUrl(Uri url);
     public TSelf WithConnectionString(string connectionString);
@@ -14,5 +14,7 @@ public interface IFluentStorageProvider<TNativeResponseUpload, TNativeResponseDo
     public Task<(Uri, TNativeResponseUpload)> UploadAsync(Stream s);
     public Task<(Uri, TNativeResponseUpload)> UploadAsync(string b64);
     public Task<(Uri, TNativeResponseUpload)> UploadAsync(byte[] b);
+    public Task<TNativeResponseDelete> DeleteIfExistsAsync();
+    public Task<TNativeResponseDelete> DeleteIfExistsAsync(Uri url);
     public (Stream, TNativeResponseDownload) OpenRead();
 }
