@@ -6,8 +6,7 @@ using Unitee.FluentStorage.Abstraction;
 
 namespace Unitee.FluentStorage.AzureBlobStorage;
 
-public interface IAzureBlobStorageProvider : IFluentStorageProvider<Response<BlobContentInfo>, Response<BlobProperties>, Response<bool>, IAzureBlobStorageProvider>
-{ }
+public interface IAzureBlobStorageProvider : IFluentStorageProvider<Response<BlobContentInfo>, Response<BlobProperties>, Response<bool>, IAzureBlobStorageProvider> { }
 
 public record AzureBlobStorageProvider : IAzureBlobStorageProvider
 {
