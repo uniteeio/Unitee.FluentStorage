@@ -51,5 +51,27 @@ public static class AzureBlobStorageFunctionalExtensions
     public static async Task<Result<(Uri, BlobContentInfo)>> FUploadAsync(this IAzureBlobStorageProvider storage, string b64) => await storage
             .AssertGuardsF()
             .Bind(async () => await storage.FUploadAsync(new MemoryStream(Convert.FromBase64String(b64))));
+
+
+    public static Result<(Stream, BlobProperties)> FOpenRead(this IAzureBlobStorageProvider storage)
+    {
+        return Result.Try(() =>
+        {
+            var (stream, blob) = storage.OpenRead();
+
+            if (blob.Value is null)
+            {
+                return Result.Failure<(Stream, BlobProperties)>("OpenRead failed");
+            }
+
+            if (stream is null)
+            {
+                return Result.Failure<(Stream, BlobProperties)>("OpenRead failed");
+            }
+
+            return Result.Success((stream, blob.Value));
+
+        }).Bind(x => x);
+    }
 }
 
