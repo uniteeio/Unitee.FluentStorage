@@ -5,6 +5,28 @@ namespace Unitee.FluentStorage.AzureBlobStorage.Functional;
 
 public static class AzureBlobStorageFunctionalExtensions
 {
+
+    private static Result AssertGuardsF(this IAzureBlobStorageProvider storage)
+    {
+        if (storage.ConnectionString is null)
+        {
+            return Result.Failure("ConnectionString is null");
+        }
+
+        if (storage.ContainerName is null)
+        {
+            return Result.Failure("ContainerName is null");
+        }
+
+        if (storage.FileName is null)
+        {
+            return Result.Failure("FileName is null");
+        }
+
+        return Result.Success();
+    }
+
+
     public static async Task<Result<(Uri, BlobContentInfo)>> FUploadAsync(this IAzureBlobStorageProvider storage, Stream s)
     {
         return await Result.Try(async () =>
@@ -25,5 +47,9 @@ public static class AzureBlobStorageFunctionalExtensions
 
         }).Bind(x => x);
     }
+
+    public static async Task<Result<(Uri, BlobContentInfo)>> FUploadAsync(this IAzureBlobStorageProvider storage, string b64) => await storage
+            .AssertGuardsF()
+            .Bind(async () => await storage.FUploadAsync(new MemoryStream(Convert.FromBase64String(b64))));
 }
- 
+
