@@ -18,7 +18,7 @@ var storage = new AzureBlobStorageProvider()
     .CreateIfNotExist();
 
 // Add to DI
-services.AddScoped<IAzureBlobStorageProvider, AzureBlobStorageProvider>(storage);
+services.AddScoped<IAzureBlobStorageProvider>(_ => storage);
 
 
 // Upload a stream
