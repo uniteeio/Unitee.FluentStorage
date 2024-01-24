@@ -1,5 +1,6 @@
 ﻿using Azure.Storage.Blobs.Models;
 using CSharpFunctionalExtensions;
+using Microsoft.AspNetCore.Http;
 
 namespace Unitee.FluentStorage.AzureBlobStorage.Functional;
 
@@ -45,6 +46,18 @@ public static class AzureBlobStorageFunctionalExtensions
 
             return Result.Success((uri, blob.Value));
 
+        }).Bind(x => x);
+    }
+
+    public static async Task<Result<(Uri, BlobContentInfo)>> FUploadAsync(this IAzureBlobStorageProvider storage, IFormFile formFile)
+    {
+        return await Result.Try(async () =>
+        {
+            return await storage.UploadAsync(formFile) switch
+            {
+                (Uri uri, { Value: BlobContentInfo info }) => Result.Success((uri, info)),
+                _ => Result.Failure<(Uri, BlobContentInfo)>("Upload failed")
+            };
         }).Bind(x => x);
     }
 
