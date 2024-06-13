@@ -86,5 +86,26 @@ public static class AzureBlobStorageFunctionalExtensions
 
         }).Bind(x => x);
     }
+
+    public static async Task<Result<(Uri, BlobProperties)>> FMoveToAsync(this IAzureBlobStorageProvider storage, string newBlobPath)
+    {
+        return await Result.Try(async () =>
+         {
+             var (uri, blob) = await storage.MoveToAsync(newBlobPath);
+
+             if (blob.Value is null)
+             {
+                 return Result.Failure<(Uri, BlobProperties)>("MoveTo failed");
+             }
+
+             if (uri is null)
+             {
+                 return Result.Failure<(Uri, BlobProperties)>("MoveTo failed");
+             }
+
+             return Result.Success((uri, blob.Value));
+
+         }).Bind(x => x);
+    }
 }
 
