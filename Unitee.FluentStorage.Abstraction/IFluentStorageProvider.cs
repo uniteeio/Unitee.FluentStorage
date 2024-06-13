@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System.Security.Cryptography;
+using Microsoft.AspNetCore.Http;
 
 namespace Unitee.FluentStorage.Abstraction;
 
@@ -7,6 +8,7 @@ public interface IFluentStorageProvider<TNativeResponseUpload, TNativeResponseDo
     public TSelf FromUrl(Uri url);
     public TSelf WithConnectionString(string connectionString);
     public TSelf WithContainerName(string containerName);
+    public Task<(Uri, TNativeResponseDownload)> MoveToAsync(string newBlobPath);
     public TSelf WithCreateIfNotExist(bool createIfNotExist = true);
     public TSelf WithFileName(string fileName);
     public TSelf WithContentType(string contentType);

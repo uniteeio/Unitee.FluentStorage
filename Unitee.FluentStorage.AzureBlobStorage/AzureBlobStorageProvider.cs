@@ -71,6 +71,34 @@ public record AzureBlobStorageProvider : IAzureBlobStorageProvider
         return (blobClient.Uri, res);
     }
 
+    public async Task<(Uri, Response<BlobProperties>)> MoveToAsync(string newBlobPath)
+    {
+        AssertGuards();
+
+        var sourceBlobClient = GetBlobClient();
+
+        if (newBlobPath == sourceBlobClient.Name)
+        {
+            return (sourceBlobClient.Uri, sourceBlobClient.GetProperties());
+        }
+
+        var destInstance = this with { FileName = newBlobPath, CreateIfNotExist = true };
+        var destBlobClient = destInstance.GetBlobClient();
+
+        var copyOperation = await destBlobClient.StartCopyFromUriAsync(sourceBlobClient.Uri);
+        await copyOperation.WaitForCompletionAsync();
+
+        if (!copyOperation.HasValue)
+        {
+            throw new InvalidOperationException("Failed to copy blob");
+        }
+
+        await sourceBlobClient.DeleteIfExistsAsync();
+
+        var newBlobInfo = await destBlobClient.GetPropertiesAsync();
+        return (destBlobClient.Uri, newBlobInfo);
+    }
+
     public async Task<Response<bool>> DeleteIfExistsAsync()
     {
         AssertGuards();
