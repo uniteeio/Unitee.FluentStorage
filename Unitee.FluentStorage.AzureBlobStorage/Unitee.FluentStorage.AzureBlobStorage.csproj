@@ -1,11 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\Unitee.FluentStorage.Abstraction\Unitee.FluentStorage.Abstraction.csproj" />
+    <ProjectReference
+      Include="..\Unitee.FluentStorage.Abstraction\Unitee.FluentStorage.Abstraction.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Storage.Blobs" Version="12.14.1" />
+    <PackageReference Include="Azure.Storage.Blobs" Version="12.20.0" />
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
   </ItemGroup>
 
